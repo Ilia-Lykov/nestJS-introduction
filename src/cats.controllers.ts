@@ -2,25 +2,29 @@ import {
   Controller,
   Get,
   Post,
-  Req,
-  Redirect,
+  //   Req,
   Header,
   HttpCode,
+  Param,
 } from '@nestjs/common';
 
 @Controller('cats')
 export class CatsController {
   @Post()
   @Header('Cache-control', 'none')
-  @Redirect('/', 301)
-  @HttpCode(204)
+  @HttpCode(201)
   create(): string {
     return 'This action add a new cat';
   }
 
   @Get()
-  findAll(@Req() request: Request): string {
-    console.log(request.body);
+  findAll(): string {
+    // console.log(request.body);
     return 'This action return all cats';
+  }
+  @Get(':id')
+  findOne(@Param() params: any): string {
+    console.log(params.id);
+    return `This action return a #${params.id} cat`;
   }
 }
